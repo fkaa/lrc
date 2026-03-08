@@ -3,10 +3,12 @@ use std::{
     str::FromStr,
 };
 
+use serde::{Deserialize, Serialize};
+
 use crate::{timestamp::Timestamp, LyricsError};
 
 /// Tags used in LRC which are in the format **[mm:ss.xx]** or **[mm:ss]** to represent time.
-#[derive(Debug, PartialOrd, PartialEq, Ord, Eq, Hash, Clone, Copy)]
+#[derive(Debug, PartialOrd, PartialEq, Ord, Eq, Hash, Clone, Copy, Serialize, Deserialize)]
 pub struct TimeTag(Timestamp);
 
 impl TimeTag {

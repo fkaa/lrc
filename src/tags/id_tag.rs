@@ -5,6 +5,7 @@ use std::{
 
 use once_cell::sync::Lazy;
 use regex::Regex;
+use serde::{Deserialize, Serialize};
 use unicase::UniCase;
 
 use crate::{IDTagErrorKind, LyricsError};
@@ -15,9 +16,9 @@ static ID_TEXT_RE: Lazy<Regex> =
     Lazy::new(|| Regex::new("^[^\x00-\x08\x0A-\x1F\x7F\\[\\]]*$").unwrap());
 
 /// Tags used in LRC which are in the format **[label: text]**.
-#[derive(Debug, Clone, Eq)]
+#[derive(Debug, Clone, Eq, Serialize, Deserialize)]
 pub struct IDTag {
-    label: UniCase<String>,
+    label: String,
     text:  String,
 }
 
@@ -41,7 +42,7 @@ impl IDTag {
         }
 
         Ok(IDTag {
-            label: UniCase::new(label),
+            label,
             text,
         })
     }
@@ -57,7 +58,7 @@ impl IDTag {
         let text = text.into();
 
         IDTag {
-            label: UniCase::new(label),
+            label,
             text,
         }
     }

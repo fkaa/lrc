@@ -61,6 +61,7 @@ use std::{
 pub use error::*;
 use once_cell::sync::Lazy;
 use regex::Regex;
+use serde::{Deserialize, Serialize};
 pub use tags::*;
 
 static LYRICS_RE: Lazy<Regex> = Lazy::new(|| Regex::new("^[^\x00-\x08\x0A-\x1F\x7F]*$").unwrap());
@@ -84,7 +85,7 @@ fn check_line<S: AsRef<str>>(line: S) -> Result<(), LyricsError> {
     Ok(())
 }
 
-#[derive(Debug, Clone, Educe)]
+#[derive(Debug, Clone, Educe, Serialize, Deserialize)]
 #[educe(Default(new))]
 pub struct Lyrics {
     /// Metadata about this lyrics.

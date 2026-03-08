@@ -1,4 +1,4 @@
-#[derive(Debug, PartialOrd, PartialEq, Ord, Eq, Hash, Clone, Copy)]
+#[derive(Debug, PartialOrd, PartialEq, Ord, Eq, Hash, Clone, Copy, Serialize, Deserialize)]
 pub struct Timestamp(i64);
 
 use std::{
@@ -8,6 +8,7 @@ use std::{
 
 use once_cell::sync::Lazy;
 use regex::Regex;
+use serde::{Deserialize, Serialize};
 
 use crate::LyricsError;
 

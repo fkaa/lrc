@@ -89,7 +89,7 @@ fn check_line<S: AsRef<str>>(line: S) -> Result<(), LyricsError> {
 pub struct Lyrics {
     /// Metadata about this lyrics.
     pub metadata: BTreeSet<IDTag>,
-    timed_lines:  Vec<(TimeTag, Rc<str>)>,
+    timed_lines:  Vec<(TimeTag, String)>,
     lines:        Vec<String>,
 }
 
@@ -189,8 +189,6 @@ impl Lyrics {
         if len == 0 {
             self.lines.push(line);
         } else {
-            let line: Rc<str> = line.into();
-
             let len_dec = len - 1;
 
             for time_tag in time_tags.iter().copied().take(len_dec) {
@@ -208,7 +206,7 @@ impl Lyrics {
     }
 
     #[inline]
-    unsafe fn add_timed_line_unchecked(&mut self, time_tag: TimeTag, line: Rc<str>) {
+    unsafe fn add_timed_line_unchecked(&mut self, time_tag: TimeTag, line: String) {
         let mut insert_index = self.timed_lines.len();
 
         while insert_index > 0 {
@@ -233,7 +231,7 @@ impl Lyrics {
     }
 
     #[inline]
-    pub fn get_timed_lines(&self) -> &[(TimeTag, Rc<str>)] {
+    pub fn get_timed_lines(&self) -> &[(TimeTag, String)] {
         &self.timed_lines
     }
 
@@ -243,7 +241,7 @@ impl Lyrics {
     }
 
     #[inline]
-    pub fn remove_timed_line(&mut self, index: usize) -> (TimeTag, Rc<str>) {
+    pub fn remove_timed_line(&mut self, index: usize) -> (TimeTag, String) {
         self.timed_lines.remove(index)
     }
 
